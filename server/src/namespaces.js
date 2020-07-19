@@ -1,4 +1,4 @@
 exports.namespaces = [
     {name: "/", route: 'index'},
-    {name: "/music", route: 'music'}
+    {name: "/youtube", route: 'youtube'}
 ];
