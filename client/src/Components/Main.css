@@ -1,0 +1,13 @@
+.main-background {
+    height: 100%;
+    width: 100%;
+    background-image: radial-gradient(at 50% bottom,#be00fe,#a306d8,#272626);
+    display: flex;
+}
+
+.main-card {
+    position: relative;
+    height: 350px;
+    width: 500px;
+    top: 100px;
+}
