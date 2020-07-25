@@ -1,21 +1,31 @@
 import React from 'react';
-import {Grid, Button} from '@material-ui/core';
+import {Box, Grid, Button} from '@material-ui/core';
+import { NavigateNextRounded, 
+        NavigateBeforeRounded, 
+        VolumeUpRounded, 
+        ShuffleRounded, 
+        QueueMusicRounded } from '@material-ui/icons';
 
-import './Main.css'
+    const icons = [ {icon: <NavigateNextRounded />}, 
+                    {icon: <NavigateBeforeRounded />},
+                    {icon: <VolumeUpRounded />}, 
+                    {icon: <ShuffleRounded />}, 
+                    {icon: <QueueMusicRounded />} 
+                ]
 
 
 const ControlBar = () => {
   return (
-      <Grid 
-          container
-          direction="row"
-          alignItems="center"
-          justify="space-around"
-      >
-          <Button color="primary">Primary</Button>
-          <Button color="primary">Primary</Button>
-          <Button color="primary">Primary</Button>
-      </Grid>
+      <Box pt={7}>
+        <Grid 
+            container
+            direction="row"
+            alignItems="center"
+            justify="space-around"
+        >
+            {icons.map(i => <Button color="primary">{i.icon}</Button>)}
+        </Grid>
+      </Box>
   );
 }
 

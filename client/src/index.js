@@ -1,19 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import { createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import * as serviceWorker from './serviceWorker';
+import { ThemeProvider } from '@material-ui/core/styles';
 
-import purple from '@material-ui/core/colors/purple';
-
-const theme = createMuiTheme({
-  palette: { 
-    primary: {
-      main: purple['A700'],
-    }
-  }
-});
+import { theme } from './Theme.js'
 
 ReactDOM.render(
   <React.StrictMode>

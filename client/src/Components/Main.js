@@ -1,32 +1,29 @@
 import React from 'react';
-import {Box, Grid, Card} from '@material-ui/core';
+import { Grid, Card } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
-import Soundwave from './Soundwave.js';
-import PlayButton from './PlayButton.js'
+import Waveform from './Waveform.js';
 import ControlBar from './ControlBar.js'
+import SearchBox from './SearchBox.js'
+import { styles } from '../Theme'
 
-import './Main.css'
+const Main = (props) => {
+  const { classes } = props;
 
-
-const Main = () => {
   return (
-    <Box className="main-background">
       <Grid 
           container
-          direction="row"
+          direction="column"
           alignItems="center"
-          justify="center"
+          justify="space-around"
       >
-        <PlayButton />
-        <Card
-        className="main-card"
-        >
-          <Soundwave />
+        <SearchBox />
+        <Card className={classes.mainCard}>
+          <Waveform />
           <ControlBar />
         </Card>
       </Grid>
-    </Box>
   );
 }
 
-export default Main;
+export default withStyles(styles)(Main);
