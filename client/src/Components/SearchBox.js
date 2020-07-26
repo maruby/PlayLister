@@ -1,8 +1,9 @@
 import React from 'react';
 import JSONP from 'jsonp';
-import {TextField} from '@material-ui/core';
+import {TextField, InputAdornment, IconButton} from '@material-ui/core';
 import {Common} from '../Utility/Constants';
 import {Autocomplete} from '@material-ui/lab';
+import { SearchRounded } from '@material-ui/icons';
 
 
 export default class SearchBox extends React.Component {
@@ -39,10 +40,17 @@ export default class SearchBox extends React.Component {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Search youtube video here or paste URL..."
-          margin="normal"
+          label="Search Music on Youtube"
           variant="outlined"
+          color="secondary"
           InputProps={{ ...params.InputProps, type: 'search' }}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton>
+                <SearchRounded /> 
+              </IconButton>
+            </InputAdornment>
+          }
           onChange={this.onChangeHandler}
         />
       )}
