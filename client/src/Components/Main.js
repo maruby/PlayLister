@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Waveform from './Waveform.js';
 import ControlBar from './ControlBar.js'
 import SearchBox from './SearchBox.js'
+import Playlist from '../Features/Playlist/Playlist.js';
 import { styles } from '../Theme'
 
 const Main = (props) => {
@@ -21,6 +22,7 @@ const Main = (props) => {
         <Card className={classes.mainCard}>
           <Waveform />
           <ControlBar />
+          <Playlist />
         </Card>
       </Grid>
   );

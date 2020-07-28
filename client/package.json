@@ -6,25 +6,25 @@
   "main": "index.js",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
+    "@reduxjs/toolkit": "^1.4.0",
     "jsonp": "^0.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1"
-    "@material-ui/icons": "^4.9.1",
-    "styled-components": "^5.1.1",
+    "react-redux": "^7.2.1",
+    "react-scripts": "^3.4.1",
+    "redux": "^4.0.5",
     "wavesurfer.js": "^4.0.1"
   },
-  "devDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
-  },
+  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
+  "proxy": "http://localhost:5551",
   "browserslist": {
     "production": [
       ">0.2%",
