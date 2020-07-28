@@ -16,11 +16,11 @@ const theme = createMuiTheme({
 const styles = {
   backgroundMain: {
     height: '100vh',
-    backgroundImage: 'radial-gradient(at 50% bottom,#be00fe,#a306d8,#272626)'
+    backgroundImage: 'radial-gradient(at 50% bottom,#700099,#8504b3,#272626)'
   },
   mainCard: {
-    height: '350px',
-    width: '500px'
+    minHeight: '60%',
+    minWidth: '100%',
   }, 
 }
 
