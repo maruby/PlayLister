@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Card } from '@material-ui/core';
+import { Grid, Card, Box } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import Waveform from './Waveform.js';
@@ -16,12 +16,16 @@ const Main = (props) => {
           direction="column"
           alignItems="center"
           justify="space-around"
+          xs={12}
       >
+        
         <SearchBox />
-        <Card className={classes.mainCard}>
+        <Box component="div" minHeight={500} minWidth={370} position="relative">
           <Waveform />
-          <ControlBar />
-        </Card>
+          <Card className={classes.mainCard}>
+            <ControlBar />
+          </Card>
+        </Box>
       </Grid>
   );
 }

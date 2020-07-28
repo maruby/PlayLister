@@ -8,17 +8,18 @@ import { styles } from '../Theme.js'
 
 const Waveform = (props) => {  
   const { classes } = props
-  const [playing, setPlaying] = useState(false) // this.state lang to
+  const [playing, setPlaying] = useState(false) 
   const waveformRef = useRef();
   const  track = useRef()
 
-  useEffect(() => { //component did mount lang to
+  useEffect(() => { 
     const waveform = WaveSurfer.create({
       barWidth: 2,
-      cursorWidth: 1,
+      barHeight: 1.5,
+      cursorWidth: 2,
       container: waveformRef.current,
       backend: 'MediaElement',
-      height: 100,
+      // height: 1,
       progressColor: '#e040fb',
       responsive: true,
       waveColor: '#e1bee7',
@@ -32,15 +33,18 @@ const Waveform = (props) => {
 
     return (
       <Box 
-        position="absolute"
-        top='31%'
-        width="500px"
-        height="300px"
+        component="div"
+        minWidth={365}
+        minHeight={100}
+        p={1}
+        position="relative"
+        top={75}
+        zIndex="tooltip"
       >
       <Grid
         container
         direction="row"
-        justify="flex-start"
+        justify="center"
         alignItems="center"
       >
         <Grid item xs={2}>
