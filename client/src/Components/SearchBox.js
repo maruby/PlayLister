@@ -1,60 +1,112 @@
-import React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import JSONP from 'jsonp';
-import {TextField, InputAdornment, IconButton} from '@material-ui/core';
-import {Common} from '../Utility/Constants';
+import {TextField, InputAdornment, IconButton, Grid, Box} from '@material-ui/core';
 import {Autocomplete} from '@material-ui/lab';
-import { SearchRounded } from '@material-ui/icons';
+import {SearchRounded} from '@material-ui/icons';
 
+import {Common} from '../Utility/Constants.js';
+import ResultsDialog from './ResultsDialog.js';
 
-export default class SearchBox extends React.Component {
-  constructor(props) {
-    super(props);
+const SearchBox = props => {
+  const [options, setOptions] = useState([]);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [openResults, setOpenResults] = useState(false);
 
-    this.state = {
-      options: []
+  useEffect(() => {
+    if(results.length > 0) {
+      setOpenResults(true);
     }
-  }
+  }, [results]);
 
-  onChangeHandler = (event) => {
-    const self = this;
+  const onChangeHandler = (event) => {
     const query = event.target.value;
     const url = Common.GOOGLE_SUGGEST + query;
-
+    
+    setQuery(query);
     JSONP(url, function(error, data){
       if (error) {
         console.log(error);
       } else {
-        self.setState({
-          options: data[1]
-        });
+        setOptions(data[1]);
       }
     });
   }
 
-  render() {
-    return (
-      <Autocomplete
-      freeSolo
-      disableClearable
-      options={this.state.options.map((option) => option[0])}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Search Music on Youtube"
-          variant="outlined"
-          color="secondary"
-          InputProps={{ ...params.InputProps, type: 'search' }}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton>
-                <SearchRounded /> 
-              </IconButton>
-            </InputAdornment>
-          }
-          onChange={this.onChangeHandler}
-        />
-      )}
-      />
-    )
+  const onSubmitHandler = (event, value) => {
+    if(event) event.preventDefault(); // Will prevent to redirect to the submit screen
+    submit();
   }
+
+  const autoCompleteOnChangehandler = (event, value) => {
+    setQuery(value);
+    setIsSubmit(true);
+  }
+
+  const submit = useCallback(() => {
+    fetch("youtube/searchVideo?query=" + query)
+      .then(response => response.json())
+      .then(json => {
+        if(json.success && json.response) {
+          setResults(json.response.data.items);
+        }
+      });
+  }, [query]);
+
+  useEffect(() => {
+    if(isSubmit === true) {
+      submit();
+      setIsSubmit(false);
+    }
+  }, [isSubmit, submit]);
+
+  const onDialogClose = () => {
+    setOpenResults(false);
+    setResults([]);
+  }
+
+  return (
+    <Box>
+      <form onSubmit={onSubmitHandler}>
+        <Grid container direction="row" alignItems="center" justify="center">
+          <Grid item xs>
+            <Autocomplete
+            freeSolo
+            disableClearable
+            options={options.map((option) => option[0])}
+            onChange={autoCompleteOnChangehandler}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Search Music on Youtube"
+                variant="outlined"
+                color="secondary"
+                InputProps={{ ...params.InputProps, type: 'search' }}
+                endadornment={
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <SearchRounded /> 
+                    </IconButton>
+                  </InputAdornment>
+                }
+                onChange={onChangeHandler}
+              />
+              )}
+            />
+          </Grid>
+
+          <Grid item xs={1} style={{paddingLeft:"10px"}}>
+            <IconButton type="submit">
+              <SearchRounded fontSize="small" />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </form>
+
+      <ResultsDialog results={results} isOpen={openResults} onClose={onDialogClose} />
+    </Box>
+  )
 }
+
+export default SearchBox;

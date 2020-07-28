@@ -6,10 +6,17 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 import { theme } from './Theme.js'
 
+// Redux configuration
+// Needed for redux setup
+import store from './App/Store';
+import {Provider} from 'react-redux';
+
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}> 
-      <App />
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')

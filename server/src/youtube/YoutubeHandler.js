@@ -48,7 +48,8 @@ async function searchYoutubeVideo(searchString) {
                 part: 'id,snippet', 
                 q: searchString, 
                 maxResults: 25,
-                key: API_KEY
+                key: API_KEY,
+                type: 'video'
             }, null, 
             function(err, res) {
                 if(err == null) {
