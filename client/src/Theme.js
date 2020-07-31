@@ -22,6 +22,23 @@ const styles = {
     minHeight: '60%',
     minWidth: '100%',
   }, 
+  searchBox: {
+    '& label': {
+      color: purple['A700']
+    },
+    '& label.Mui-focused': {
+      color: purple[100],
+    },
+    '& .MuiInput-underline:before': {
+      borderBottomColor: purple['A700'],
+    },
+   '& .MuiInput-underline:after': {
+      borderBottomColor: purple[100],
+    },
+    '& .MuiInput-underline:hover:not($disabled):not($focused):not($error):before': {
+      borderBottom: `2px solid ${purple[100]} !important`
+    }
+  }
 }
 
 export {

@@ -17,7 +17,7 @@ const Main = (props) => {
           direction="column"
           alignItems="center"
           justify="space-around"
-          xs={12}
+          // xs={12}
       >
         
         <SearchBox />

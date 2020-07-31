@@ -3,9 +3,11 @@ import JSONP from 'jsonp';
 import {TextField, InputAdornment, IconButton, Grid, Box} from '@material-ui/core';
 import {Autocomplete} from '@material-ui/lab';
 import {SearchRounded} from '@material-ui/icons';
+import { withStyles } from '@material-ui/core/styles';
 
 import {Common} from '../Utility/Constants.js';
 import ResultsDialog from './ResultsDialog.js';
+import { styles } from '../Theme.js'
 
 const SearchBox = props => {
   const [options, setOptions] = useState([]);
@@ -13,6 +15,8 @@ const SearchBox = props => {
   const [results, setResults] = useState([]);
   const [isSubmit, setIsSubmit] = useState(false);
   const [openResults, setOpenResults] = useState(false);
+
+  const { classes } = props
 
   useEffect(() => {
     if(results.length > 0) {
@@ -67,7 +71,7 @@ const SearchBox = props => {
   }
 
   return (
-    <Box>
+    <Box minWidth={365}>
       <form onSubmit={onSubmitHandler}>
         <Grid container direction="row" alignItems="center" justify="center">
           <Grid item xs>
@@ -80,8 +84,9 @@ const SearchBox = props => {
               <TextField
                 {...params}
                 label="Search Music on Youtube"
-                variant="outlined"
-                color="secondary"
+                // variant="outlined"
+                // color="secondary"
+                className={classes.searchBox}
                 InputProps={{ ...params.InputProps, type: 'search' }}
                 endadornment={
                   <InputAdornment position="end">
@@ -109,4 +114,4 @@ const SearchBox = props => {
   )
 }
 
-export default SearchBox;
+export default withStyles(styles)(SearchBox);

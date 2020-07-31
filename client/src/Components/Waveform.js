@@ -39,7 +39,7 @@ const Waveform = (props) => {
         p={1}
         position="relative"
         top={75}
-        zIndex="tooltip"
+        zIndex="modal"
       >
       <Grid
         container

@@ -15,7 +15,7 @@ function App(props) {
         display='flex'
         height='100%'
         width='100%'
-      >
+      > 
         <Main />
       </Box>
     </div>
