@@ -33,30 +33,27 @@ const Waveform = (props) => {
 
     return (
       <Box 
-        component="div"
         minWidth={365}
-        minHeight={100}
+        height="3.5rem"
         p={1}
         position="relative"
-        top={75}
-        zIndex="modal"
       >
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-      >
-        <Grid item xs={2}>
-          <Fab color="primary">
-            <PlayArrowRounded fontSize="large" />
-          </Fab>
-        </Grid>
-          <Grid item xs={10}>
-            <div ref={waveformRef} > </div>
-              <audio ref={track} src={url} />
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item xs={2}>
+            <Fab color="primary">
+              <PlayArrowRounded fontSize="large" />
+            </Fab>
           </Grid>
-      </Grid>
+            <Grid item xs={10}>
+              <div ref={waveformRef} > </div>
+                <audio ref={track} src={url} />
+            </Grid>
+        </Grid>
       </Box>
     );
   }

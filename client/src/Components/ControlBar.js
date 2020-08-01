@@ -5,6 +5,8 @@ import { NavigateNextRounded,
         VolumeUpRounded, 
         ShuffleRounded, 
         QueueMusicRounded } from '@material-ui/icons';
+import { withStyles } from '@material-ui/core/styles';
+import { styles } from '../Theme'
 
     const icons = [ {icon: <NavigateBeforeRounded />}, 
                     {icon: <NavigateNextRounded />},
@@ -13,9 +15,11 @@ import { NavigateNextRounded,
                     {icon: <QueueMusicRounded />} 
                 ]
 
-const ControlBar = () => {
+const ControlBar = (props) => {
+  const {classes} = props;
+
   return (
-    <Box width="100%" pt={7}>
+    <Box className={classes.controlBar}>
         <Grid 
             container
             direction="row"
@@ -30,4 +34,4 @@ const ControlBar = () => {
   );
 }
 
-export default ControlBar;
+export default withStyles(styles)(ControlBar);

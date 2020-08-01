@@ -19,8 +19,7 @@ const styles = {
     backgroundImage: 'radial-gradient(at 50% bottom,#700099,#8504b3,#272626)'
   },
   mainCard: {
-    minHeight: '60%',
-    minWidth: '100%',
+    paddingTop: '5rem'
   }, 
   searchBox: {
     '& label': {
@@ -32,12 +31,26 @@ const styles = {
     '& .MuiInput-underline:before': {
       borderBottomColor: purple['A700'],
     },
-   '& .MuiInput-underline:after': {
+    '& .MuiInput-underline:after': {
       borderBottomColor: purple[100],
     },
     '& .MuiInput-underline:hover:not($disabled):not($focused):not($error):before': {
       borderBottom: `2px solid ${purple[100]} !important`
     }
+  },
+  wrapper: {
+    height: "100%",
+    width: "100%"
+  },
+  searchBoxWrapper: {
+    width: "50%",
+    paddingTop: "2em"
+  },
+  musicPlayerWrapper: {
+    marginBottom: "5em"
+  },
+  controlBar: {
+    paddingTop: "0.3em"
   }
 }
 

@@ -16,7 +16,7 @@ const SearchBox = props => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [openResults, setOpenResults] = useState(false);
 
-  const { classes } = props
+  const { classes } = props;
 
   useEffect(() => {
     if(results.length > 0) {
@@ -71,42 +71,31 @@ const SearchBox = props => {
   }
 
   return (
-    <Box minWidth={365}>
+    <Box {...props}>
       <form onSubmit={onSubmitHandler}>
-        <Grid container direction="row" alignItems="center" justify="center">
-          <Grid item xs>
-            <Autocomplete
-            freeSolo
-            disableClearable
-            options={options.map((option) => option[0])}
-            onChange={autoCompleteOnChangehandler}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Search Music on Youtube"
-                // variant="outlined"
-                // color="secondary"
-                className={classes.searchBox}
-                InputProps={{ ...params.InputProps, type: 'search' }}
-                endadornment={
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <SearchRounded /> 
-                    </IconButton>
-                  </InputAdornment>
-                }
-                onChange={onChangeHandler}
-              />
-              )}
-            />
-          </Grid>
-
-          <Grid item xs={1} style={{paddingLeft:"10px"}}>
-            <IconButton type="submit">
-              <SearchRounded fontSize="small" />
-            </IconButton>
-          </Grid>
-        </Grid>
+        <Autocomplete
+        freeSolo
+        disableClearable
+        options={options.map((option) => option[0])}
+        onChange={autoCompleteOnChangehandler}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Search Music on Youtube"
+            className={classes.searchBox}
+            onChange={onChangeHandler}
+            InputProps={{
+              ...params.InputProps, type: 'search',
+              endAdornment: 
+                <InputAdornment onClick={onSubmitHandler}>
+                  <IconButton>
+                    <SearchRounded /> 
+                  </IconButton>
+                </InputAdornment>
+            }}
+          />
+          )}
+        />
       </form>
 
       <ResultsDialog results={results} isOpen={openResults} onClose={onDialogClose} />
