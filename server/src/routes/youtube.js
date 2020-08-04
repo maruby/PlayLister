@@ -15,6 +15,18 @@ router.get('/searchVideo', function(req, res, next) {
     });
 });
 
+router.get(`/playList/:videoId`, (req, res) => {
+    const {videoId} = req.params
+    console.log('Invoked /playList | videoId = ' + videoId);
+    var resultPromise = YoutubeHandler.playListItems(videoId);
+
+    resultPromise.then(function successHandler(result) {
+        responseHandler(result, res);
+    },function errorHandler(result) {
+        responseHandler(result, res); 
+    });
+}) 
+
 function responseHandler(result, res) {
     let success = result.status == 200;
 

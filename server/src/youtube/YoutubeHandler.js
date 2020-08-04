@@ -67,4 +67,24 @@ async function searchYoutubeVideo(searchString) {
     return response;
 }
 
+/**
+ * Display video list 
+ * 
+ * @param {*} videoId 
+ */
+const playListItems = async (videoId) => {
+    let youtube = getYoutube();
+    
+    const response = await youtube.videos.list({
+            part: "id,snippet",
+            id: videoId,
+            key: API_KEY
+    }).then(res=> {
+        console.log(res)
+        return res
+    }).catch(err)
+    
+}
+
 exports.searchYoutubeVideo = searchYoutubeVideo;
+exports.playListItems = playListItems;

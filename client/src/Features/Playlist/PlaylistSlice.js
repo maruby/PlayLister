@@ -20,7 +20,9 @@ const initialState = {
  * @param {*} action 
  */
 const addMusicToPlaylistReducer = function (state, action) {
-    state.playlist.push(action.payload);
+    const videoId = action.payload
+    
+    state.playlist.push(videoId)
 }
 
 /**
