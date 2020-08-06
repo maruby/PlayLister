@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {
@@ -57,9 +57,9 @@ const ResultsDialog = props => {
         onClose();
     }
 
-    const playVideoToPlaylist = () => {
+    // const playVideoToPlaylist = () => {
 
-    }
+    // }
 
     return(
         <Dialog open={isOpen} onClose={onClose} aria-labelledby="customized-dialog-title">
@@ -69,7 +69,7 @@ const ResultsDialog = props => {
                 {results.map(result => (
                     <ListItem divider button key={result.id.videoId} marginBottom="10px">
                         <Box marginRight="10px">
-                            <img src={result.snippet.thumbnails.default.url}/>
+                            <img src={result.snippet.thumbnails.default.url} alt="loading..."/>
                         </Box>
                         <ListItemText
                             primary={parseDOMToString(result.snippet.title)}

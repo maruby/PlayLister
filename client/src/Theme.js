@@ -19,7 +19,7 @@ const styles = {
     backgroundImage: 'radial-gradient(at 50% bottom,#700099,#8504b3,#272626)'
   },
   mainCard: {
-    paddingTop: '5rem'
+    paddingTop: '2rem'
   }, 
   searchBox: {
     '& label': {
@@ -47,10 +47,24 @@ const styles = {
     paddingTop: "2em"
   },
   musicPlayerWrapper: {
-    marginBottom: "5em"
+    // minWidth: "15rem",
+    width: "100%"
+    // marginBottom: "5em"
   },
   controlBar: {
-    paddingTop: "0.3em"
+    padding: "0.3em 1rem",
+    paddingBottom: "1.5em"
+  },
+  mainControlsWrapper: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    height: "0.1rem"
+  },
+  playButton: {
+    margin: "0 1.1rem"
   }
 }
 
