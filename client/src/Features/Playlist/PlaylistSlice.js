@@ -25,7 +25,7 @@ const initialState = {
 const addMusicToPlaylistReducer = function (state, action) {
     const videoId = action.payload;
     state.playlist.includes(videoId) ? state = {...state.playlist, alert: false} : state.playlist.push(videoId)
-    localStorage.setItem('playlist', JSON.stringify(videoId));
+    localStorage.setItem('playlist', JSON.stringify(state.playlist));
 }
 
 /**
