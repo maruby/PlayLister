@@ -18,7 +18,6 @@ const SearchBox = props => {
 
   const { classes } = props;
 
-  useEffect(() => {
   const onChangeHandler = (event) => {
     const query = event.target.value;
     const url = Common.GOOGLE_SUGGEST + query;
