@@ -2,7 +2,8 @@ import {createSlice} from '@reduxjs/toolkit';
 
 // Global STATES
 const initialState = {
-    playlist: []
+    playlist: [], 
+    alert: true
 }
 
 
@@ -21,8 +22,8 @@ const initialState = {
  */
 const addMusicToPlaylistReducer = function (state, action) {
     const videoId = action.payload
+    state.playlist.includes(videoId) ? state = {...state.playlist, alert: false} : state.playlist.push(videoId)
     
-    state.playlist.push(videoId)
 }
 
 /**
@@ -41,6 +42,16 @@ const removeMusicFromPlaylistReducer = function(state, action) {
     });
 }
 
+/**
+ * Closing the Alert component
+ * 
+ * @param {*} state 
+ * @param {*} action 
+ */
+const closeAlertReducer = function(state) {
+    state = {...state.playlist, alert: false}
+}
+
 
 // Exports
 export const PlaylistSlice = createSlice({
@@ -48,12 +59,14 @@ export const PlaylistSlice = createSlice({
     initialState: initialState,
     reducers: {
         addMusicToPlaylist: addMusicToPlaylistReducer,
-        removeMusicFromPlaylist: removeMusicFromPlaylistReducer
+        removeMusicFromPlaylist: removeMusicFromPlaylistReducer,
+        closeAlert: closeAlertReducer
     }
 });
 
 export const selectPlaylist = state => state.playlist.playlist;
+export const selectOpenAlert = state => state.playlist.alert
 
-export const {addMusicToPlaylist, removeMusicFromPlaylist} = PlaylistSlice.actions;
+export const {addMusicToPlaylist, removeMusicFromPlaylist, closeAlert} = PlaylistSlice.actions;
 
 export default PlaylistSlice.reducer;

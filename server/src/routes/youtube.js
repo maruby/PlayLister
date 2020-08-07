@@ -20,8 +20,6 @@ router.get(`/playList/:videoId`, (req, res) => {
     console.log('Invoked /playList | videoId = ' + videoId);
     var resultPromise = YoutubeHandler.playListItems(videoId);
 
-    console.log(resultPromise)
-
     resultPromise.then(function successHandler(result) {
         responseHandler(result, res);
     },function errorHandler(result) {

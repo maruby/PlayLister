@@ -33,7 +33,7 @@ const Main = (props) => {
             className={classes.wrapper}
         >
           <Box className={classes.musicPlayerWrapper}>
-            <Waveform />
+            {/* <Waveform /> */}
             <Card className={classes.mainCard}>
               <Divider light />
               <ControlBar />

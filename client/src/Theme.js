@@ -1,8 +1,8 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { purple } from '@material-ui/core/colors';
+import { purple, grey } from '@material-ui/core/colors';
 
 
-const theme = createMuiTheme({
+const muiTheme = createMuiTheme({
   palette: { 
     primary: {
       main: purple['A700'],
@@ -28,14 +28,17 @@ const styles = {
     '& label.Mui-focused': {
       color: purple[100],
     },
-    '& .MuiInput-underline:before': {
-      borderBottomColor: purple['A700'],
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: purple[100],
-    },
-    '& .MuiInput-underline:hover:not($disabled):not($focused):not($error):before': {
-      borderBottom: `2px solid ${purple[100]} !important`
+    '& .MuiInput-underline': {
+      color: purple[100],
+      '&:before': {
+        borderBottomColor: purple['A700']
+      },
+      '&:after': {
+        borderBottomColor: purple[100]
+      },
+      '&:hover:not($disabled):not($focused):not($error):before': {
+        borderBottom: `2px solid ${purple[100]} !important`
+      }
     }
   },
   wrapper: {
@@ -51,10 +54,20 @@ const styles = {
   },
   controlBar: {
     paddingTop: "0.3em"
+  },
+  dialogTitle: {
+    margin: 0,
+    padding: 2,
+  },
+  closeButton: {
+    position: 'absolute',
+    right: 1,
+    top: 1,
+    color: grey[500],
   }
 }
 
 export {
-  theme, 
+  muiTheme, 
   styles
 }

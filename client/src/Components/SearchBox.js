@@ -19,11 +19,6 @@ const SearchBox = props => {
   const { classes } = props;
 
   useEffect(() => {
-    if(results.length > 0) {
-      setOpenResults(true);
-    }
-  }, [results]);
-
   const onChangeHandler = (event) => {
     const query = event.target.value;
     const url = Common.GOOGLE_SUGGEST + query;
@@ -41,6 +36,7 @@ const SearchBox = props => {
   const onSubmitHandler = (event, value) => {
     if(event) event.preventDefault(); // Will prevent to redirect to the submit screen
     submit();
+    setOpenResults(true)
   }
 
   const autoCompleteOnChangehandler = (event, value) => {
@@ -55,7 +51,7 @@ const SearchBox = props => {
         if(json.success && json.response) {
           setResults(json.response.data.items);
         }
-      });
+      })
   }, [query]);
 
   useEffect(() => {
@@ -89,7 +85,7 @@ const SearchBox = props => {
               endAdornment: 
                 <InputAdornment onClick={onSubmitHandler}>
                   <IconButton>
-                    <SearchRounded /> 
+                    <SearchRounded color="secondary"/> 
                   </IconButton>
                 </InputAdornment>
             }}
@@ -98,9 +94,9 @@ const SearchBox = props => {
         />
       </form>
 
-      <ResultsDialog results={results} isOpen={openResults} onClose={onDialogClose} />
+      <ResultsDialog results={results} isOpen={openResults} onClose={onDialogClose}/>
     </Box>
-  )
+  );
 }
 
-export default withStyles(styles)(SearchBox);
+export default withStyles(styles)(SearchBox)

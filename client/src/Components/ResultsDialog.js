@@ -9,39 +9,35 @@ import {
     Box, 
     Typography,
     IconButton,
-    DialogContent
+    DialogContent, 
+    Snackbar, 
+    Fade,
+    CircularProgress
 } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import AddIcon from '@material-ui/icons/Add';
-import {useDispatch} from 'react-redux';
-
-import {parseDOMToString} from '../Utility/Constants';
 import {
-    addMusicToPlaylist
-} from '../Features/Playlist/PlaylistSlice';
+    Alert, 
+    AlertTitle
+} from '@material-ui/lab'
+import { Close, AddRounded } from '@material-ui/icons';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import { useDispatch, useSelector } from 'react-redux';
 
-const styles = (theme) => ({
-    root: {
-      margin: 0,
-      padding: theme.spacing(2),
-    },
-    closeButton: {
-      position: 'absolute',
-      right: theme.spacing(1),
-      top: theme.spacing(1),
-      color: theme.palette.grey[500],
-    },
-  });
+import { styles } from '../Theme.js'
+import { parseDOMToString } from '../Utility/Constants';
+import {
+    addMusicToPlaylist,
+    closeAlert,
+    selectOpenAlert
+} from '../Features/Playlist/PlaylistSlice';
   
 const DialogTitle = withStyles(styles)((props) => {
     const { children, classes, onClose, ...other } = props;
     return (
-        <MuiDialogTitle disableTypography className={classes.root} {...other}>
+        <MuiDialogTitle disableTypography className={classes.dialogTitle} {...other}>
         <Typography variant="h6">{children}</Typography>
         {onClose ? (
             <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-            <CloseIcon />
+            <Close />
             </IconButton>
         ) : null}
         </MuiDialogTitle>
@@ -49,7 +45,8 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 const ResultsDialog = props => {
-    const {results, isOpen, onClose} = props;
+    const openAlert = useSelector(selectOpenAlert);
+    const {results, isOpen, onClose, loading} = props;
     const dispatch = useDispatch();
 
     const addVideoToPlaylist = (videoId) => {
@@ -62,31 +59,51 @@ const ResultsDialog = props => {
     }
 
     return(
+        <>
         <Dialog open={isOpen} onClose={onClose} aria-labelledby="customized-dialog-title">
             <DialogTitle id="customized-dialog-title" onClose={onClose}>Search Results:</DialogTitle>
             <DialogContent dividers style={{padding:"0"}}>
-            <List>
-                {results.map(result => (
-                    <ListItem divider button key={result.id.videoId} marginBottom="10px">
-                        <Box marginRight="10px">
-                            <img src={result.snippet.thumbnails.default.url}/>
-                        </Box>
-                        <ListItemText
-                            primary={parseDOMToString(result.snippet.title)}
-                            secondary={
-                                <Typography variant="caption" nowrap>{parseDOMToString(result.snippet.description)}</Typography>
-                            }
-                        />
-                        <Box>
-                            <IconButton onClick={() => {addVideoToPlaylist(result.id.videoId)}}>
-                                <AddIcon />
-                            </IconButton>
-                        </Box>
-                    </ListItem>
-                ))}
-            </List>
+            {results.length === 0 ?
+                <Fade
+                    in={true}
+                    unmountOnExit
+                >
+                    <CircularProgress color="primary"/>
+                </Fade> :
+                <List>
+                    {results.map(result => (
+                        <ListItem divider button key={result.id.videoId} marginBottom="10px">
+                            <Box marginRight="10px">
+                                <img src={result.snippet.thumbnails.default.url}/>
+                            </Box>
+                            <ListItemText
+                                primary={parseDOMToString(result.snippet.title)}
+                                secondary={
+                                    <Typography variant="caption" nowrap>{parseDOMToString(result.snippet.description)}</Typography>
+                                }
+                            />
+                            <Box>
+                                <IconButton onClick={() => {addVideoToPlaylist(result.id.videoId)}}>
+                                    <AddRounded />
+                                </IconButton>
+                            </Box>
+                        </ListItem>
+                    ))}
+                </List>}
             </DialogContent>
         </Dialog>
+        {/* <Snackbar 
+            open={"true"} 
+            autoHideDuration={3000} 
+            onClose={() => dispatch(closeAlert())}
+            anchorOrigin={ "top", "center" }
+            >
+            <Alert severity="warning" color="secondary">
+                <AlertTitle>Warning</AlertTitle>
+                This is a warning alert — <strong>check it out!</strong>
+            </Alert>
+        </Snackbar> */}
+        </>
     );
 }
 
