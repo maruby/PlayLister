@@ -41,6 +41,7 @@ const SearchBox = props => {
   const onSubmitHandler = (event, value) => {
     if(event) event.preventDefault(); // Will prevent to redirect to the submit screen
     submit();
+    setOpenResults(true)
   }
 
   const autoCompleteOnChangehandler = (event, value) => {
@@ -61,6 +62,7 @@ const SearchBox = props => {
           }
       });
     }
+
   }, [query]);
 
   useEffect(() => {
@@ -94,7 +96,7 @@ const SearchBox = props => {
               endAdornment: 
                 <InputAdornment onClick={onSubmitHandler}>
                   <IconButton>
-                    <SearchRounded /> 
+                    <SearchRounded color="secondary"/> 
                   </IconButton>
                 </InputAdornment>
             }}
@@ -103,9 +105,9 @@ const SearchBox = props => {
         />
       </form>
 
-      <ResultsDialog results={results} isOpen={openResults} onClose={onDialogClose} />
+      <ResultsDialog results={results} isOpen={openResults} onClose={onDialogClose}/>
     </Box>
-  )
+  );
 }
 
-export default withStyles(styles)(SearchBox);
+export default withStyles(styles)(SearchBox)

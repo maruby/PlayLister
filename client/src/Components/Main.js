@@ -120,7 +120,6 @@ const Main = (props) => {
                   <SkipNextRounded color="primary" fontSize="small"/>
                 </Fab>
             </Box>
-
             <Card className={classes.mainCard}>
               <ControlBar 
                 volume={volume} 
