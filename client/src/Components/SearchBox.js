@@ -17,10 +17,10 @@ const SearchBox = props => {
   const [openResults, setOpenResults] = useState(false);
 
   const { classes } = props;
+
   useEffect(() => {
     if(results.length > 0) {
       localStorage.setItem(query, JSON.stringify(results));
-      setOpenResults(true);
     }
   }, [results, query]);
 

@@ -4,7 +4,7 @@ const storedPlaylist = localStorage.getItem('playlist');
 const parsedPlaylist = (storedPlaylist) ? JSON.parse(storedPlaylist) : [];
 // Global STATES
 const initialState = {
-    playlist: parsedPlaylist
+    playlist: parsedPlaylist,
     alert: true
 }
 

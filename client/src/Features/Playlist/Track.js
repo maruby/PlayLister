@@ -20,9 +20,9 @@ const Track = (props) => {
     const { videoId } = props
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (videoId) => {
 
-            const response = await fetch(`youtube/playList/_V-jBaK6UPA`)
+            const response = await fetch(`youtube/playList/${videoId}`)
             const json = await response.json()
 
             if (json.success && json.response) {
