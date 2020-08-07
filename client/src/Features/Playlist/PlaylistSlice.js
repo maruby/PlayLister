@@ -1,8 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 
+const storedPlaylist = localStorage.getItem('playlist');
+const parsedPlaylist = (storedPlaylist) ? JSON.parse(storedPlaylist) : [];
 // Global STATES
 const initialState = {
-    playlist: [], 
+    playlist: parsedPlaylist
     alert: true
 }
 
@@ -21,9 +23,9 @@ const initialState = {
  * @param {*} action 
  */
 const addMusicToPlaylistReducer = function (state, action) {
-    const videoId = action.payload
+    const videoId = action.payload;
     state.playlist.includes(videoId) ? state = {...state.playlist, alert: false} : state.playlist.push(videoId)
-    
+    localStorage.setItem('playlist', JSON.stringify(videoId));
 }
 
 /**
@@ -40,6 +42,7 @@ const removeMusicFromPlaylistReducer = function(state, action) {
     state.playlist.forEach( (value, index) => {
         if(value === videoId) state.playlist.splice(index, 1);
     });
+    localStorage.setItem('playlist', JSON.stringify(state.playlist));
 }
 
 /**

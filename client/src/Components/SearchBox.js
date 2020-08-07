@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import JSONP from 'jsonp';
-import {TextField, InputAdornment, IconButton, Grid, Box} from '@material-ui/core';
+import {TextField, InputAdornment, IconButton, Box} from '@material-ui/core';
 import {Autocomplete} from '@material-ui/lab';
 import {SearchRounded} from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
@@ -17,8 +17,13 @@ const SearchBox = props => {
   const [openResults, setOpenResults] = useState(false);
 
   const { classes } = props;
-
   useEffect(() => {
+    if(results.length > 0) {
+      localStorage.setItem(query, JSON.stringify(results));
+      setOpenResults(true);
+    }
+  }, [results, query]);
+
   const onChangeHandler = (event) => {
     const query = event.target.value;
     const url = Common.GOOGLE_SUGGEST + query;
@@ -45,13 +50,19 @@ const SearchBox = props => {
   }
 
   const submit = useCallback(() => {
-    fetch("youtube/searchVideo?query=" + query)
-      .then(response => response.json())
-      .then(json => {
-        if(json.success && json.response) {
-          setResults(json.response.data.items);
-        }
-      })
+    const cachedResults = localStorage.getItem(query);
+    if(cachedResults) {
+      setResults(JSON.parse(cachedResults));
+    }else {
+      fetch("youtube/searchVideo?query=" + query)
+        .then(response => response.json())
+        .then(json => {
+          if(json.success && json.response) {
+            setResults(json.response.data.items);
+          }
+      });
+    }
+
   }, [query]);
 
   useEffect(() => {
