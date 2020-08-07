@@ -18,10 +18,10 @@ const Track = (props) => {
     const [thumbnail, setThumbnail] = useState("")
 
     const { videoId } = props
-
+    
     useEffect(() => {
-        const fetchData = async (videoId) => {
-
+        
+        const fetchData = async () => {
             const response = await fetch(`youtube/playList/${videoId}`)
             const json = await response.json()
 
