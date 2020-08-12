@@ -58,14 +58,14 @@ const Main = (props) => {
             direction="row"
             alignItems="center"
             justify="center"
-            style={{position:"absolute"}}
+            style={{position:"absolute", top: "-30px"}}
             className={classes.wrapper}
         >
           <ReactPlayer
               ref={playerRef}
               url='https://www.youtube.com/watch?v=9T4MMIJSDfM' 
-              height="480px"
-              width="854px"
+              height="310px"
+              width="700px"
               playing={isPlaying}
               volume={volume}
               onDuration={onDuration}
@@ -76,8 +76,9 @@ const Main = (props) => {
                 }
               }}
               style={{
-                  // display:"none",
-                  shadow:"box"
+                  minHeight: "70px",
+                  minWidth: "100px",
+                  boxShadow: "5px 10px 18px #000000"
                 }}
               />
         </Grid>
@@ -99,7 +100,7 @@ const Main = (props) => {
             justify="flex-end"
             className={classes.wrapper}
         >
-          <Box className={classes.musicPlayerWrapper}>
+          <Box className={classes.musicPlayerWrapper} zIndex="tooltip">
             <Box className={classes.mainControlsWrapper}>
                 <Fab color="secondary" size="small">
                   <SkipPreviousRounded color="primary" fontSize="small"/>

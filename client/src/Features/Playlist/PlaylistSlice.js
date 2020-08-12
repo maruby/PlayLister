@@ -5,7 +5,7 @@ const parsedPlaylist = (storedPlaylist) ? JSON.parse(storedPlaylist) : [];
 // Global STATES
 const initialState = {
     playlist: parsedPlaylist,
-    alert: true
+    alert: false
 }
 
 
@@ -24,7 +24,7 @@ const initialState = {
  */
 const addMusicToPlaylistReducer = function (state, action) {
     const videoId = action.payload;
-    state.playlist.includes(videoId) ? state = {...state.playlist, alert: false} : state.playlist.push(videoId)
+    state.playlist.includes(videoId) ? state.alert = true : state.playlist.push(videoId)
     localStorage.setItem('playlist', JSON.stringify(state.playlist));
 }
 
@@ -52,9 +52,8 @@ const removeMusicFromPlaylistReducer = function(state, action) {
  * @param {*} action 
  */
 const closeAlertReducer = function(state) {
-    state = {...state.playlist, alert: false}
+    state.alert = false
 }
-
 
 // Exports
 export const PlaylistSlice = createSlice({
@@ -68,7 +67,7 @@ export const PlaylistSlice = createSlice({
 });
 
 export const selectPlaylist = state => state.playlist.playlist;
-export const selectOpenAlert = state => state.playlist.alert
+export const selectAlert = state => state.playlist.alert
 
 export const {addMusicToPlaylist, removeMusicFromPlaylist, closeAlert} = PlaylistSlice.actions;
 

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import 'fontsource-roboto';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import { muiTheme } from './Theme.js'

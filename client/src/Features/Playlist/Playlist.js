@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import { selectPlaylist } from './PlaylistSlice';
 import { List } from '@material-ui/core';
 
-import Track from './Track'
-import EmptyPlaylist from './EmptyPlaylist'
+import Track from '../../Components/Track'
+import EmptyPlaylist from '../../Components/EmptyPlaylist'
 
 const Playlist = (props) =>{
     const playlist = useSelector(selectPlaylist);
     const [videoList, setVideoList] = useState(false)
-
+    
     useEffect(() => {
         playlist.length > 0 ? setVideoList(false) : setVideoList(true)
     }, [playlist]);

@@ -1,12 +1,13 @@
 import React from 'react';
 import {Box, Grid, Button, Typography} from '@material-ui/core';
 import {ShuffleRounded, 
-        QueueMusicRounded } from '@material-ui/icons';
+        QueueMusicRounded,
+        VolumeDownRounded,
+        VolumeUpRounded
+      } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from '../Theme';
 import Slider from '@material-ui/core/Slider';
-import VolumeDown from '@material-ui/icons/VolumeDown';
-import VolumeUp from '@material-ui/icons/VolumeUp';
 
 const ControlBar = (props) => {
   const {classes} = props;
@@ -42,7 +43,7 @@ const ControlBar = (props) => {
             justify="center"
         >
             <Grid item>
-              <VolumeDown color="primary" />
+              <VolumeDownRounded color="primary" />
             </Grid>
             <Grid item xs={1} style={{padding:"0 0.5%"}}>
               <Slider 
@@ -54,7 +55,7 @@ const ControlBar = (props) => {
                 aria-labelledby="continuous-slider" />
             </Grid>
             <Grid item>
-              <VolumeUp color="primary" />
+              <VolumeUpRounded color="primary" />
             </Grid>
             
             <Grid item style={{paddingLeft:"3%", paddingBottom:"0.3%"}}>

@@ -9,6 +9,20 @@ const muiTheme = createMuiTheme({
     },
     secondary: {
       main: purple[100]
+    },
+    warning: {
+      light: purple[100],
+      main: purple[500],
+      dark: purple[700],
+      contrastText: "rgba(0, 0, 0, 0.87)"
+    }
+  },
+  typography: {
+    fontFamily: "'Montserrat', sans-serif",
+    subtitle1:{
+      fontSize: "extra-light",
+      fontWeight: 200,
+      color: grey[500]
     }
   }
 });
@@ -56,7 +70,7 @@ const styles = {
   },
   controlBar: {
     padding: "0.3em 1rem",
-    paddingBottom: "1.5em"
+    paddingBottom: "1.5em",
   },
   mainControlsWrapper: {
     display: "flex",
@@ -72,13 +86,27 @@ const styles = {
   },
   dialogTitle: {
     margin: 0,
-    padding: 2,
+    padding: 10,
   },
   closeButton: {
     position: 'absolute',
-    right: 1,
-    top: 1,
+    right: 5,
+    top: 5,
     color: grey[500],
+  },
+  '@global': {
+    '*::scrollbar-width': 'thin',
+
+    '*::-webkit-scrollbar': {
+      width: '0.4em'
+    },
+    '*::-webkit-scrollbar-track': {
+      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+    },
+    '*::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+      outline: '1px solid slategrey'
+    }
   }
 }
 

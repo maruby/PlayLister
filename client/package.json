@@ -9,6 +9,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@reduxjs/toolkit": "^1.4.0",
+    "fontsource-roboto": "^3.0.3",
     "jsonp": "^0.2.1",
     "react": "^16.13.1",
     "react-beforeunload": "^2.2.2",
