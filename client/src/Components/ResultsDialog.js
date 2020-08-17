@@ -50,9 +50,8 @@ const ResultsDialog = props => {
     // const playVideoToPlaylist = () => {
 
     // }
-    console.log(isAlertOpen)
     return(
-        <>
+        <Box zIndex="modal">
         <Dialog open={isOpen} onClose={onClose} aria-labelledby="customized-dialog-title">
             <DialogTitle id="customized-dialog-title" onClose={onClose}>Search Results:</DialogTitle>        
             <DialogContent dividers style={{padding:"0"}}>
@@ -83,7 +82,7 @@ const ResultsDialog = props => {
                 <AlertTitle>This video is already on your Playlist</AlertTitle>
             </Alert>
         </Snackbar>
-        </>
+        </Box>
     );
 }
 

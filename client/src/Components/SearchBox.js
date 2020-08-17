@@ -20,6 +20,7 @@ const SearchBox = props => {
 
   useEffect(() => {
     if(results.length > 0) {
+      setOpenResults(true)
       localStorage.setItem(query, JSON.stringify(results));
     }
   }, [results, query]);
@@ -78,7 +79,7 @@ const SearchBox = props => {
   }
 
   return (
-    <Box {...props}>
+    <Box {...props} >
       <form onSubmit={onSubmitHandler}>
         <Autocomplete
         freeSolo

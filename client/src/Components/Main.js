@@ -100,7 +100,7 @@ const Main = (props) => {
             justify="flex-end"
             className={classes.wrapper}
         >
-          <Box className={classes.musicPlayerWrapper} zIndex="tooltip">
+          <Box className={classes.musicPlayerWrapper} zIndex="modal">
             <Box className={classes.mainControlsWrapper}>
                 <Fab color="secondary" size="small">
                   <SkipPreviousRounded color="primary" fontSize="small"/>
