@@ -60,6 +60,8 @@ const SearchBox = props => {
         .then(json => {
           if(json.success && json.response) {
             setResults(json.response.data.items);
+          } else if (json.error){
+            setResults(json.error)
           }
       });
     }

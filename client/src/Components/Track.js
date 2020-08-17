@@ -5,8 +5,9 @@ import {
     Box, 
     Typography,
     IconButton,
+    Snackbar
 } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab'
+import { Skeleton, Alert, AlertTitle } from '@material-ui/lab'
 import { RemoveRounded, AddRounded } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 
@@ -41,6 +42,7 @@ const Track = (props) => {
     const [thumbnail, setThumbnail] = useState("")
     const [addId, setAddId] = useState()
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState({error: '', status: '', message: '', alert: false})
 
     const { videoId, result } = props
     
@@ -57,6 +59,8 @@ const Track = (props) => {
                     setDescription(result.snippet.description)
                     setThumbnail(result.snippet.thumbnails.default.url)
                     setLoading(false)
+                } else if (json.error) {
+                    setError({error: result.error, status: result.code, message: result.errors[0].message, alert: true})
                 }
             }
             fetchData()
@@ -67,6 +71,7 @@ const Track = (props) => {
             setDescription(result.snippet.description)
             setThumbnail(result.snippet.thumbnails.default.url)
             setAddId(result.id.videoId)
+            setError({error: result.error, status: result.code, message: result.errors[0].message, alert: true})
         }
         
     }, [videoId, result])
@@ -81,6 +86,7 @@ const Track = (props) => {
     }
 
     return (
+        <>
         <ListItem divider button key={videoId} marginBottom="10px">
             {loading ? <CustomizedSkeleton /> : 
             <>
@@ -106,6 +112,18 @@ const Track = (props) => {
                 </>
                 }
         </ListItem>
+         <Snackbar 
+         open={error.alert} 
+         autoHideDuration={2000} 
+         onClose={() => setError({alert: false})}
+         anchorOrigin={{vertical: "top", horizontal:"center"}}
+         >
+         <Alert severity="warning">
+            <AlertTitle>{error.error}<strong>{error.code}</strong></AlertTitle>
+            {error.message}
+         </Alert>
+     </Snackbar>
+     </>
     )
     
 }

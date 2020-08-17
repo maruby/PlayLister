@@ -30,10 +30,18 @@ router.get(`/playList/:videoId`, (req, res) => {
 function responseHandler(result, res) {
     let success = result.status == 200;
 
-    res.send({
-        "success": success, 
-        "response": result
-    });
+    if(success){
+        res.send({
+                "success": success, 
+                "response": result
+            });
+    } else {
+        res.send({
+            "error": error,
+        })
+    }
+
+    
 }
 
 
