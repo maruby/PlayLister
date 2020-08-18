@@ -64,9 +64,7 @@ const styles = {
     paddingTop: "2em"
   },
   musicPlayerWrapper: {
-    // minWidth: "15rem",
     width: "100%"
-    // marginBottom: "5em"
   },
   controlBar: {
     padding: "0.3em 1rem",

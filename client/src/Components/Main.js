@@ -1,5 +1,5 @@
-import React, {useState,} from 'react';
-import { Grid, Card, Box, Divider, Fab } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Grid, Card, Box, Divider, Fab, Collapse } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ControlBar from './ControlBar.js'
 import SearchBox from './SearchBox.js'
@@ -13,18 +13,38 @@ import {
   SkipPreviousRounded,
   Pause,
 }from '@material-ui/icons';
+import { Common, PlaylistConstants, LoopConstants } from '../Utility/Constants.js'
+import { selectPlaylist, shuffledNextInPlaylist, skipMusicInPlaylist } from './../Features/Playlist/PlaylistSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 const Main = (props) => {
   const { classes } = props;
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(JSON.parse(localStorage.getItem('volume')));
+
+  const parsedVolume = JSON.parse(localStorage.getItem('volume'));
+  const parsedLoop = JSON.parse(localStorage.getItem('loop'));
+
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [volume, setVolume] = useState(parsedVolume ? parsedVolume : 0);
   const [reactPlayer, setReactPlayer] = useState({});
   const [duration, setDuration] = useState(0);
-  const [played, setPlayed] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [listCollapsed, setListCollapsed] = useState(false);
+  
+  const dispatch = useDispatch();
+  const playlist = useSelector(selectPlaylist);
+  const [playing, setPlaying] = useState(playlist);
+  const [loop, setLoop] = useState(parsedLoop ? parsedLoop: LoopConstants.REPEAT_ALL);
+  
+  useEffect(() => {
+    // Top most music in the playlist will always be set to current playing
+    setPlaying(playlist[0]);
+  }, [playlist]);
 
   useBeforeunload((event) => {
-    // Save current volume value before leaving
-    localStorage.setItem('volume', JSON.stringify(volume));
+    localStorage.setItem('volume', JSON.stringify(volume)); // Save current volume value before leaving
+    localStorage.setItem('playlist', JSON.stringify(playlist)); // Save current playlist
+    localStorage.setItem('loop', JSON.stringify(loop)); // Save current loop
   });
 
   const playOnClickHandler = (event) => {
@@ -39,16 +59,41 @@ const Main = (props) => {
     setDuration(duration);
   }
 
-  const onSeekChangeHandler = (event, newValue) => {
+  const changeVideoTime = (newValue) => {
     reactPlayer.seekTo(parseFloat(newValue))
   }
 
   const onProgressHandler = (state) => {
-    setPlayed(state.playedSeconds);
+    setElapsedTime(state.playedSeconds);
   }
 
   const playerRef = player => {
     setReactPlayer(player);
+  }
+
+  const onPlaylistClick = () => {
+    setListCollapsed(!listCollapsed);
+  }
+  
+  const previousButtonHandler = () => {
+    dispatch(skipMusicInPlaylist(PlaylistConstants.PREVIOUS))
+  }
+
+  const nextButtonHandler = () => {
+    if(loop === LoopConstants.REPEAT_ALL) {
+      dispatch(skipMusicInPlaylist(PlaylistConstants.NEXT))
+    }else if(loop === LoopConstants.REPEAT_ONE) {
+      setTimeout(() => {
+        setElapsedTime(0)
+        changeVideoTime(0)
+      }, 500)
+    }else if(loop === LoopConstants.SHUFFLE) {
+      dispatch(shuffledNextInPlaylist())
+    }
+  }
+
+  const onClickLoop = () => {
+    setLoop(loop === LoopConstants.SHUFFLE ? LoopConstants.REPEAT_ALL : loop + 1)
   }
 
   return (
@@ -63,16 +108,18 @@ const Main = (props) => {
         >
           <ReactPlayer
               ref={playerRef}
-              url='https://www.youtube.com/watch?v=9T4MMIJSDfM' 
+              url={ Common.YOUTUBE + playing } 
               height="310px"
               width="700px"
               playing={isPlaying}
               volume={volume}
               onDuration={onDuration}
               onProgress={onProgressHandler}
+              onEnded={nextButtonHandler}
               config={{
-                youtube: {
-                  playerVars: { controls: 0 }
+                playerVars: {
+                  controls: 0,
+                  start: 0,
                 }
               }}
               style={{
@@ -102,7 +149,7 @@ const Main = (props) => {
         >
           <Box className={classes.musicPlayerWrapper} zIndex="modal">
             <Box className={classes.mainControlsWrapper}>
-                <Fab color="secondary" size="small">
+                <Fab id="previous" color="secondary" size="small" onClick={previousButtonHandler}>
                   <SkipPreviousRounded color="primary" fontSize="small"/>
                 </Fab>
 
@@ -117,20 +164,26 @@ const Main = (props) => {
                     <PlayArrowRounded fontSize="large"/>}
                 </Fab>
 
-                <Fab color="secondary" size="small">
+                <Fab id="next" color="secondary" size="small" onClick={nextButtonHandler}>
                   <SkipNextRounded color="primary" fontSize="small"/>
                 </Fab>
             </Box>
+
             <Card className={classes.mainCard}>
               <ControlBar 
                 volume={volume} 
                 onVolumeChange={onVolumeChangeHandler}
-                onSeekChange={onSeekChangeHandler}
                 duration={duration}
-                played={played}
+                elapsedTime={elapsedTime}
+                changeVideoTime={changeVideoTime}
+                onPlaylistClick={onPlaylistClick}
+                loop={loop}
+                onClickLoop={onClickLoop}
               />
               <Divider light />
-              <Playlist />
+              <Collapse in={listCollapsed}>
+                <Playlist />
+              </Collapse>
             </Card>
           </Box>
         </Grid>

@@ -12,7 +12,7 @@ import { RemoveRounded, AddRounded } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 
 import { parseDOMToString } from '../Utility/Constants';
-import { removeMusicFromPlaylist, addMusicToPlaylist } from '../Features/Playlist/PlaylistSlice';
+import { removeMusicFromPlaylist, addMusicToPlaylist, addMusicToTopPlaylist } from '../Features/Playlist/PlaylistSlice';
 
 
 const CustomizedSkeleton = (props) => {
@@ -44,29 +44,37 @@ const Track = (props) => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState({error: '', status: '', message: '', alert: false})
 
-    const { videoId, result } = props
+    const { videoId, result, closeResultDialog } = props
     
     useEffect(() => {
         if(videoId) {
             const fetchData = async () => {
-                setLoading(true)
-                const response = await fetch(`youtube/playList/${videoId}`)
-                const json = await response.json()
-    
-                if (json.success && json.response) {
-                    const result = json.response.data.items[0]
-                    setTitle(result.snippet.title)
-                    setDescription(result.snippet.description)
-                    setThumbnail(result.snippet.thumbnails.default.url)
-                    setLoading(false)
-                } else if (json.error) {
-                    setError({error: result.error, status: result.code, message: result.errors[0].message, alert: true})
+                const cachedTrack = localStorage.getItem(videoId)
+                if(cachedTrack) {
+                    const parsedCache = JSON.parse(cachedTrack)
+                    setTitle(parsedCache.title)
+                    setDescription(parsedCache.description)
+                    setThumbnail(parsedCache.thumbnails.default.url)
+                }else {
+                    setLoading(true)
+                    const response = await fetch(`youtube/playList/${videoId}`)
+                    const json = await response.json()
+        
+                    if (json.success && json.response) {
+                        const result = json.response.data.items[0]
+                        setTitle(result.snippet.title)
+                        setDescription(result.snippet.description)
+                        setThumbnail(result.snippet.thumbnails.default.url)
+                        localStorage.setItem(videoId, JSON.stringify(result.snippet))
+                        setLoading(false)
+                    } else if (json.error) {
+                        setError({error: result.error, status: result.code, message: result.errors[0].message, alert: true})
+                    }
                 }
             }
-            fetchData()
-        } 
 
-        if(result) {
+            fetchData()
+        }else if(result) {
             setTitle(result.snippet.title)
             setDescription(result.snippet.description)
             setThumbnail(result.snippet.thumbnails.default.url)
@@ -85,45 +93,56 @@ const Track = (props) => {
         dispatch(addMusicToPlaylist(videoId));
     }
 
+    const playThisTrack = () => {
+        dispatch(addMusicToTopPlaylist(videoId ? videoId : addId))
+
+        if(!videoId) {
+            closeResultDialog()
+        }
+    }
+
     return (
         <>
-        <ListItem divider button key={videoId} marginBottom="10px">
-            {loading ? <CustomizedSkeleton /> : 
-            <>
-            <Box marginRight="10px">
-                <img src={thumbnail} height="50px" width="70px"/>
-            </Box>
-            <ListItemText
-                primary={title}
-                secondary={
-                    <Typography variant="subtitle1" noWrap>{description}</Typography>
-                }
-            />
-                {videoId ? <Box>
-                    <IconButton onClick={() => {removeVideoToPlaylist(videoId)}}>
-                        <RemoveRounded />
-                    </IconButton>
-                </Box>
-                : <Box>
-                    <IconButton onClick={() => {addVideoToPlaylist(addId)}}>
-                        <AddRounded />
-                    </IconButton>
-                </Box> }
+            <ListItem divider button key={videoId} marginbottom="10px">
+                {loading ? <CustomizedSkeleton /> : 
+                <>
+                    <Box marginRight="10px" onClick={playThisTrack}>
+                        <img src={thumbnail} height="50px" width="70px" alt={"thumbnail"}/>
+                    </Box>
+
+                    <ListItemText
+                        primary={title}
+                        secondary={
+                            <Typography variant="subtitle1" noWrap>{description}</Typography>
+                        }
+                        onClick={playThisTrack}
+                    />
+
+                    <Box>
+                    {videoId ? 
+                        <IconButton onClick={() => {removeVideoToPlaylist(videoId)}}>
+                            <RemoveRounded />
+                        </IconButton>
+                    :
+                        <IconButton onClick={() => {addVideoToPlaylist(addId)}}>
+                            <AddRounded />
+                        </IconButton>
+                    }
+                    </Box>
                 </>
                 }
-        </ListItem>
-         <Snackbar 
-         open={error.alert} 
-         autoHideDuration={2000} 
-         onClose={() => setError({alert: false})}
-         anchorOrigin={{vertical: "top", horizontal:"center"}}
-         >
-         <Alert severity="warning">
-            <AlertTitle>{error.error}<strong>{error.code}</strong></AlertTitle>
-            {error.message}
-         </Alert>
-     </Snackbar>
-     </>
+            </ListItem>
+            <Snackbar 
+                open={error.alert} 
+                autoHideDuration={2000} 
+                onClose={() => setError({alert: false})}
+                anchorOrigin={{vertical: "top", horizontal:"center"}}>
+                <Alert severity="warning">
+                    <AlertTitle>{error.error}<strong>{error.code}</strong></AlertTitle>
+                    {error.message}
+                </Alert>
+            </Snackbar>
+        </>
     )
     
 }

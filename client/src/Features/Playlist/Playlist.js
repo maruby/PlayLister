@@ -15,7 +15,10 @@ const Playlist = (props) =>{
     }, [playlist]);
 
     return (
-        videoList ? <EmptyPlaylist /> : <List> {playlist.map( videoId => <Track videoId={videoId}/>)} </List>
+        videoList ? <EmptyPlaylist /> : 
+            <List style={{maxHeight:"72vh", overflow: 'auto'}}> 
+                {playlist.map( videoId => <Track key={videoId} videoId={videoId}/>)} 
+            </List>
     )
 }
 
