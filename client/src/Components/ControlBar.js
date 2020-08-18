@@ -1,37 +1,60 @@
-import React from 'react';
-import {Box, Grid, Button, Typography} from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import {Box, Grid, Button, Typography, Tooltip} from '@material-ui/core';
 import {ShuffleRounded, 
         QueueMusicRounded,
         VolumeDownRounded,
-        VolumeUpRounded
+        VolumeUpRounded,
+        Repeat,
+        RepeatOne
       } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from '../Theme';
 import Slider from '@material-ui/core/Slider';
+import { LoopConstants, formatDuration } from '../Utility/Constants'
 
 const ControlBar = (props) => {
   const {classes} = props;
   const {
     volume, 
-    onVolumeChange, 
-    onSeekChange,
+    onVolumeChange,
+    changeVideoTime,
     duration,
-    played
+    elapsedTime,
+    onPlaylistClick,
+    loop,
+    onClickLoop
   } = props;
+  const [value, setValue] = useState(0) 
+  const [isSeeking, setIsSeeking] = useState(false)
+  const parsedLoop = JSON.parse(localStorage.getItem('loop'));
+  const [loopTooltip, setLoopTooltip] = useState(parsedLoop ? parsedLoop : LoopConstants.DEFAULT)
 
-  const formatDuration = (seconds) => {
-    const date = new Date(seconds * 1000)
-    const hh = date.getUTCHours()
-    const mm = date.getUTCMinutes()
-    const ss = pad(date.getUTCSeconds())
-    if (hh) {
-      return `${hh}:${pad(mm)}:${ss}`;
+  useEffect(() => {
+    setLoopTooltip(
+      loop === LoopConstants.REPEAT_ALL ? LoopConstants.REPEAT_ALL_TOOLTIP :
+      loop === LoopConstants.REPEAT_ONE ? LoopConstants.REPEAT_ONE_TOOLTIP : 
+      loop === LoopConstants.SHUFFLE ? LoopConstants.SHUFFLE_TOOLTIP :
+      LoopConstants.DEFAULT
+    )
+  }, [loop])
+
+  useEffect(() => {
+    if(!isSeeking) {
+      setValue(elapsedTime)
     }
-    return `${mm}:${ss}`;
+  }, [isSeeking, elapsedTime])
+ 
+  const onVideoSeekChange = (event, newValue) => {
+    if(!isSeeking) {
+      setIsSeeking(true)
+    }
+
+    setValue(newValue)
   }
 
-  const pad = (string) => {
-    return ('0' + string).slice(-2)
+  const onVideoSeekChangeCommitted = (event, newValue) => {
+    setIsSeeking(false)
+    changeVideoTime(newValue)
   }
 
   return (
@@ -60,18 +83,19 @@ const ControlBar = (props) => {
             
             <Grid item style={{paddingLeft:"3%", paddingBottom:"0.3%"}}>
               <Typography variant="caption">
-                {played ? formatDuration(played) : "0:00"}
+                {value ? formatDuration(value) : "0:00"}
               </Typography>
             </Grid>
 
             <Grid item xs style={{padding:"0 1%"}}>
-              <Slider 
+              <Slider
                 min={0}
                 step={1}
                 max={duration}
-                onChange={onSeekChange}
-                value={played}
-                aria-labelledby="continuous-slider" />
+                value={value}
+                onChange={onVideoSeekChange}
+                onChangeCommitted={onVideoSeekChangeCommitted}
+              />
             </Grid>
 
             <Grid item style={{paddingBottom:"0.3%"}}>
@@ -81,10 +105,21 @@ const ControlBar = (props) => {
             </Grid>
 
             <Grid item>
-              <Button color="primary"><ShuffleRounded /></Button>
+              <Tooltip title={loopTooltip}>
+                <Button color="primary" onClick={onClickLoop}>
+                  {loop === LoopConstants.REPEAT_ALL ?
+                    <Repeat />
+                  :loop === LoopConstants.REPEAT_ONE ?
+                    <RepeatOne />
+                  :loop === LoopConstants.SHUFFLE ?
+                    <ShuffleRounded />
+                  : <span>LoopError</span>
+                  }
+                </Button>
+              </Tooltip>
             </Grid>
             <Grid item>
-              <Button color="primary"><QueueMusicRounded /></Button>
+              <Button color="primary" onClick={onPlaylistClick}><QueueMusicRounded /></Button>
             </Grid>
         </Grid>
     </Box>
