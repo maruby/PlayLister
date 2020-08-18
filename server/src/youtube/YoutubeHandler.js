@@ -54,7 +54,7 @@ async function searchYoutubeVideo(searchString) {
             function(err, res) {
                 if(err == null) {
                     console.log('Response received')
-                    resolve(res);
+                    setTimeout(()=> resolve(res), 180000);
                 }else {
                     reject(err);
                 }
@@ -80,8 +80,8 @@ const playListItems = async (videoId) => {
             part: "id,snippet",
             id: videoId,
             key: API_KEY
-        }).then(res => resolve(res))
-        .then(err => reject(err))
+        }).then(res => setTimeout(() => resolve(res), 180000))
+        .catch(err => reject(err))
         .catch(err => console.error(err))
     })
     

@@ -7,7 +7,7 @@ const EmptyPlaylist = () => {
         display="flex" 
         alignItems="center"
         justifyContent="center">
-            <Card>
+            <Card style={{margin: "0px", padding: "0px"}}>
                 <CardContent>
                 <Typography component="h5" variant="h5">
                     There are no Videos in this list (シ_ _)シ
