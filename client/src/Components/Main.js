@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Card, Box, Divider, Fab, Collapse } from '@material-ui/core';
+import { Grid, Card, Box, Divider, Fab, Collapse, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ControlBar from './ControlBar.js'
 import SearchBox from './SearchBox.js'
@@ -11,7 +11,7 @@ import {
   PlayArrowRounded, 
   SkipNextRounded,
   SkipPreviousRounded,
-  Pause,
+  PauseRounded,
 }from '@material-ui/icons';
 import { Common, PlaylistConstants, LoopConstants } from '../Utility/Constants.js'
 import { selectPlaylist, shuffledNextInPlaylist, skipMusicInPlaylist } from './../Features/Playlist/PlaylistSlice';
@@ -30,11 +30,10 @@ const Main = (props) => {
   const [duration, setDuration] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [listCollapsed, setListCollapsed] = useState(false);
-  
-  const dispatch = useDispatch();
   const playlist = useSelector(selectPlaylist);
   const [playing, setPlaying] = useState(playlist);
   const [loop, setLoop] = useState(parsedLoop ? parsedLoop: LoopConstants.REPEAT_ALL);
+  const dispatch = useDispatch();
   
   useEffect(() => {
     // Top most music in the playlist will always be set to current playing
@@ -103,31 +102,50 @@ const Main = (props) => {
             direction="row"
             alignItems="center"
             justify="center"
-            style={{position:"absolute", top: "-30px"}}
+            style={{position:"absolute"}}
             className={classes.wrapper}
         >
-          <ReactPlayer
-              ref={playerRef}
-              url={ Common.YOUTUBE + playing } 
-              height="310px"
-              width="700px"
-              playing={isPlaying}
-              volume={volume}
-              onDuration={onDuration}
-              onProgress={onProgressHandler}
-              onEnded={nextButtonHandler}
-              config={{
-                playerVars: {
-                  controls: 0,
-                  start: 0,
-                }
-              }}
-              style={{
-                  minHeight: "70px",
-                  minWidth: "100px",
-                  boxShadow: "5px 10px 18px #000000"
+          <Box style={{
+            boxShadow: "5px 10px 18px #000000",  
+            position: "relative",
+            width: "60%",
+            height: "55%",
+            paddingtop: "75%" }}
+          >
+          {playlist.length > 0 ? 
+            <ReactPlayer
+                ref={playerRef}
+                url={ Common.YOUTUBE + playing } 
+                height="100%"
+                width="100%"
+                playing={isPlaying}
+                volume={volume}
+                onDuration={onDuration}
+                onProgress={onProgressHandler}
+                onEnded={nextButtonHandler}
+                config={{
+                  playerVars: {
+                    controls: 0,
+                    start: 0,
+                  }
                 }}
-              />
+                  />
+                :
+                <Box height="100%" width="100%" 
+                display="flex" 
+                alignItems="center"
+                justifyContent="center">
+                 <Card className={classes.cardContent}>
+                   <Typography component="h1" variant="h1">
+                      ┐(￣ヘ￣;)┌
+                   </Typography>
+                   <Typography variant="h5">
+                      There is no video on your playlist
+                   </Typography>
+                 </Card>
+                 </Box>
+                }
+              </Box>
         </Grid>
 
         <Grid 
@@ -159,7 +177,7 @@ const Main = (props) => {
                   className={classes.playButton} 
                   onClick={playOnClickHandler}>
                   {isPlaying ?
-                    <Pause fontSize="large" />
+                    <PauseRounded fontSize="large" />
                     :
                     <PlayArrowRounded fontSize="large"/>}
                 </Fab>
@@ -179,6 +197,7 @@ const Main = (props) => {
                 onPlaylistClick={onPlaylistClick}
                 loop={loop}
                 onClickLoop={onClickLoop}
+                listCollapsed={listCollapsed}
               />
               <Divider light />
               <Collapse in={listCollapsed}>

@@ -67,8 +67,8 @@ const Track = (props) => {
                         setThumbnail(result.snippet.thumbnails.default.url)
                         localStorage.setItem(videoId, JSON.stringify(result.snippet))
                         setLoading(false)
-                    } else if (json.error) {
-                        setError({error: result.error, status: result.code, message: result.errors[0].message, alert: true})
+                    // } else if (json.error) {
+                    //     setError({error: result.error, status: result.code, message: result.errors[0].message, alert: true})
                     }
                 }
             }
@@ -79,7 +79,7 @@ const Track = (props) => {
             setDescription(result.snippet.description)
             setThumbnail(result.snippet.thumbnails.default.url)
             setAddId(result.id.videoId)
-            setError({error: result.error, status: result.code, message: result.errors[0].message, alert: true})
+            // setError({error: result.error, status: result.code, message: result.errors[0].message, alert: true})
         }
         
     }, [videoId, result])

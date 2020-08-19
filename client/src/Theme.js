@@ -92,6 +92,15 @@ const styles = {
     top: 5,
     color: grey[500],
   },
+  cardContent: {
+    height:"100%",
+    width:"100%",
+    alignItems: "center",
+    justifyContent:"center",
+    padding:"10px",
+    display: 'flex',
+    flexDirection: 'column',
+  },
   '@global': {
     '*::scrollbar-width': 'thin',
 

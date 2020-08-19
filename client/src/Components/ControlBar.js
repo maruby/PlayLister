@@ -4,8 +4,9 @@ import {ShuffleRounded,
         QueueMusicRounded,
         VolumeDownRounded,
         VolumeUpRounded,
-        Repeat,
-        RepeatOne
+        RepeatRounded,
+        RepeatOneRounded,
+        ExpandMoreRounded
       } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { styles } from '../Theme';
@@ -13,8 +14,9 @@ import Slider from '@material-ui/core/Slider';
 import { LoopConstants, formatDuration } from '../Utility/Constants'
 
 const ControlBar = (props) => {
-  const {classes} = props;
+
   const {
+    classes,
     volume, 
     onVolumeChange,
     changeVideoTime,
@@ -22,7 +24,8 @@ const ControlBar = (props) => {
     elapsedTime,
     onPlaylistClick,
     loop,
-    onClickLoop
+    onClickLoop,
+    listCollapsed
   } = props;
   const [value, setValue] = useState(0) 
   const [isSeeking, setIsSeeking] = useState(false)
@@ -108,9 +111,9 @@ const ControlBar = (props) => {
               <Tooltip title={loopTooltip}>
                 <Button color="primary" onClick={onClickLoop}>
                   {loop === LoopConstants.REPEAT_ALL ?
-                    <Repeat />
+                    <RepeatRounded />
                   :loop === LoopConstants.REPEAT_ONE ?
-                    <RepeatOne />
+                    <RepeatOneRounded />
                   :loop === LoopConstants.SHUFFLE ?
                     <ShuffleRounded />
                   : <span>LoopError</span>
@@ -119,7 +122,9 @@ const ControlBar = (props) => {
               </Tooltip>
             </Grid>
             <Grid item>
-              <Button color="primary" onClick={onPlaylistClick}><QueueMusicRounded /></Button>
+              <Button color="primary" onClick={onPlaylistClick}>
+                {listCollapsed ? <ExpandMoreRounded /> : <QueueMusicRounded />}
+              </Button>
             </Grid>
         </Grid>
     </Box>
