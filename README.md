@@ -9,5 +9,5 @@ Playlister creates a playlist of your favourite youtube videos. At first, we pla
 3. Enjoy!
 
 # AUTHORS
-Maria Ruby Pelueta GITHUB: https://github.com/maruby
-John Marvie Biglang-awa GITHUB: https://github.com/jmbiglangawa
+* Maria Ruby Pelueta GITHUB: https://github.com/maruby
+* John Marvie Biglang-awa GITHUB: https://github.com/jmbiglangawa
