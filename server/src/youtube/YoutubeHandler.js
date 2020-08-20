@@ -72,7 +72,7 @@ async function searchYoutubeVideo(searchString) {
  * 
  * @param {*} videoId 
  */
-const playListItems = async (videoId) => {
+const getYoutubeVideo = async (videoId) => {
     let youtube = getYoutube();
     
     const response = new Promise((resolve, reject) => {
@@ -90,4 +90,4 @@ const playListItems = async (videoId) => {
 }
 
 exports.searchYoutubeVideo = searchYoutubeVideo;
-exports.playListItems = playListItems;
+exports.getYoutubeVideo = getYoutubeVideo;

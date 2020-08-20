@@ -31,13 +31,13 @@ const Main = (props) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [listCollapsed, setListCollapsed] = useState(false);
   const playlist = useSelector(selectPlaylist);
-  const [playing, setPlaying] = useState(playlist);
+  const [nowPlaying, setNowPlaying] = useState(playlist);
   const [loop, setLoop] = useState(parsedLoop ? parsedLoop: LoopConstants.REPEAT_ALL);
   const dispatch = useDispatch();
   
   useEffect(() => {
     // Top most music in the playlist will always be set to current playing
-    setPlaying(playlist[0]);
+    setNowPlaying(playlist[0]);
   }, [playlist]);
 
   useBeforeunload((event) => {
@@ -115,7 +115,7 @@ const Main = (props) => {
           {playlist.length > 0 ? 
             <ReactPlayer
                 ref={playerRef}
-                url={ Common.YOUTUBE + playing } 
+                url={ Common.YOUTUBE + nowPlaying } 
                 height="100%"
                 width="100%"
                 playing={isPlaying}

@@ -15,10 +15,10 @@ router.get('/searchVideo', function(req, res, next) {
     });
 });
 
-router.get(`/playList/:videoId`, (req, res) => {
+router.get('/getVideo/:videoId', (req, res) => {
     const {videoId} = req.params
     console.log('Invoked /playList | videoId = ' + videoId);
-    var resultPromise = YoutubeHandler.playListItems(videoId);
+    var resultPromise = YoutubeHandler.getYoutubeVideo(videoId);
 
     resultPromise.then(function successHandler(result) {
         responseHandler(result, res);

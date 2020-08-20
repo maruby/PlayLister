@@ -57,7 +57,7 @@ const Track = (props) => {
                     setThumbnail(parsedCache.thumbnails.default.url)
                 }else {
                     setLoading(true)
-                    const response = await fetch(`youtube/playList/${videoId}`)
+                    const response = await fetch(`youtube/getVideo/${videoId}`)
                     const json = await response.json()
         
                     if (json.success && json.response) {
