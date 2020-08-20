@@ -19,6 +19,20 @@ const muiTheme = createMuiTheme({
   },
   typography: {
     fontFamily: "'Montserrat', sans-serif",
+    h1:{
+      '@media (max-width:550px)': {
+        fontSize: '1.5rem',
+        },
+      '@media (max-width:600px)': {
+      fontSize: '3rem',
+      },
+      '@media (max-width:700px)': {
+      fontSize: '4rem',
+      },
+      '@media (max-width:850px)': {
+        fontSize: '4.5rem',
+        },
+    },
     subtitle1:{
       fontSize: "extra-light",
       fontWeight: 200,
