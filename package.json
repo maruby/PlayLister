@@ -1,0 +1,22 @@
+{
+  "name": "playlister",
+  "version": "1.0.0",
+  "description": "Hello World",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd server && npm run start\" \"cd client && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maruby/PlayLister.git"
+  },
+  "author": "MRSP && JMBA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maruby/PlayLister/issues"
+  },
+  "homepage": "https://github.com/maruby/PlayLister#readme",
+  "dependencies": {
+    "concurrently": "^5.3.0"
+  }
+}
