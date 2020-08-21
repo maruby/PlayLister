@@ -1,0 +1,19 @@
+{
+  "name": "playlister",
+  "version": "1.0.0",
+  "description": "Website Project that will create a video playlist ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maruby/PlayLister.git"
+  },
+  "author": "MRSP && JMBA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maruby/PlayLister/issues"
+  },
+  "homepage": "https://github.com/maruby/PlayLister#readme"
+}
