@@ -2,11 +2,11 @@
   "name": "server",
   "version": "0.0.0",
   "private": true,
-  "scripts": {    
-    "client-install": "npm install --prefix ../client",    
-    "start": "node ./src/bin/www",    
-    "server": "nodemon ./src/bin/www",    
-    "client": "npm start --prefix ../client",    
+  "scripts": {
+    "client-install": "npm install --prefix ../client",
+    "start": "node ./src/bin/www",
+    "server": "nodemon ./src/bin/www",
+    "client": "npm start --prefix ../client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
