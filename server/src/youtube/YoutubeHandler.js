@@ -4,7 +4,7 @@ var fs = require('fs');
 var youtube;
 
 // ============== Global Variables ==================
-var keyLoc = "./.config/API_KEY";
+var keyLoc = "./config/API_KEY";
 var API_KEY;
 
 // ================= Methods ========================
