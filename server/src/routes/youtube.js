@@ -17,7 +17,7 @@ router.get('/searchVideo', function(req, res, next) {
 
 router.get('/getVideo/:videoId', (req, res) => {
     const {videoId} = req.params
-    console.log('Invoked /playList | videoId = ' + videoId);
+    console.log('Invoked /getVideo | videoId = ' + videoId);
     var resultPromise = YoutubeHandler.getYoutubeVideo(videoId);
 
     resultPromise.then(function successHandler(result) {
