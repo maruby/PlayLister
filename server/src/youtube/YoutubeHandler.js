@@ -4,29 +4,39 @@ var fs = require('fs');
 var youtube;
 
 // ============== Global Variables ==================
-var keyLoc = "./.config/API_KEY_1";
+var keyLoc = "./.config/API_KEY";
 var API_KEY;
 
 // ================= Methods ========================
 
-/*
- * Read API Key from config files 
+/**
+ * Get the config file from keyLoc
  */
-fs.readFile(keyLoc, function (err, content) {
-    console.log('Reading config files...');
-    if(err) {
-      console.log('Error loading config file: ' + err);
-      return;
-    }else {
-        console.log('Read successful, API KEY acquired')
-        API_KEY = content;
+function getApiKey() {
+    if(API_KEY) {
+        return;
     }
-});
+    
+    console.log('Reading config file...');
+    fs.readFile(keyLoc, function (err, content) {
+        if(err) {
+            console.log('Error loading config file: ' + err);
+            return;
+        }else {
+            console.log('Read successful, API KEY acquired')
+            API_KEY = content;
+        }
+    });
+}
 
 /**
  * Setup youtube object
  */
 function getYoutube() {
+    if(API_KEY == null) {
+        getApiKey();
+    }
+
     if(youtube == null) {
         youtube = google.youtube("v3");
     }
