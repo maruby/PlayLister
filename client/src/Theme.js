@@ -11,6 +11,12 @@ const muiTheme = createMuiTheme({
       main: purple[100]
     },
     warning: {
+      light: purple[300],
+      main: purple[800],
+      dark: purple[900],
+      contrastText: "rgba(0, 0, 0, 0.87)"
+    },
+    success: {
       light: purple[100],
       main: purple[500],
       dark: purple[700],

@@ -7,7 +7,7 @@ import {
     IconButton,
     Snackbar
 } from '@material-ui/core';
-import { Skeleton, Alert, AlertTitle } from '@material-ui/lab'
+import { Skeleton, Alert } from '@material-ui/lab'
 import { RemoveRounded, AddRounded } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 
@@ -42,6 +42,7 @@ const Track = (props) => {
     const [thumbnail, setThumbnail] = useState("")
     const [addId, setAddId] = useState()
     const [loading, setLoading] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     const [error, setError] = useState({error: '', status: '', message: '', alert: false})
 
     const { videoId, result, closeResultDialog } = props
@@ -91,6 +92,7 @@ const Track = (props) => {
 
     const addVideoToPlaylist = (videoId) => {
         dispatch(addMusicToPlaylist(videoId));
+        setIsOpen(true)
     }
 
     const playThisTrack = () => {
@@ -133,13 +135,12 @@ const Track = (props) => {
                 }
             </ListItem>
             <Snackbar 
-                open={error.alert} 
+                open={isOpen} 
                 autoHideDuration={2000} 
-                onClose={() => setError({alert: false})}
+                onClose={() => setIsOpen(false)}
                 anchorOrigin={{vertical: "top", horizontal:"center"}}>
-                <Alert severity="warning">
-                    <AlertTitle>{error.error}<strong>{error.code}</strong></AlertTitle>
-                    {error.message}
+                <Alert severity="success">
+                    Video successfully added!
                 </Alert>
             </Snackbar>
         </>
