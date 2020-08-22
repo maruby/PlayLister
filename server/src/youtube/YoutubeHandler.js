@@ -4,7 +4,7 @@ var fs = require('fs');
 var youtube;
 
 // ============== Global Variables ==================
-var keyLoc = "src/.config/API_KEY_1";
+var keyLoc = "./.config/API_KEY_1";
 var API_KEY;
 
 // ================= Methods ========================
@@ -54,7 +54,7 @@ async function searchYoutubeVideo(searchString) {
             function(err, res) {
                 if(err == null) {
                     console.log('Response received')
-                    setTimeout(()=> resolve(res), 180000);
+                    resolve(res);
                 }else {
                     reject(err);
                 }
@@ -80,7 +80,7 @@ const getYoutubeVideo = async (videoId) => {
             part: "id,snippet",
             id: videoId,
             key: API_KEY
-        }).then(res => setTimeout(() => resolve(res), 180000))
+        }).then(res => resolve(res))
         .catch(err => reject(err))
         .catch(err => console.error(err))
     })
